@@ -1,8 +1,9 @@
 const bcrypt = require('bcrypt');
 
 class User {
-    constructor(username,password,balance) {
+    constructor(username,mobile,password,balance) {
         this.username = username;
+        this.mobile=mobile;
         this.balance = balance;
         this.initializePassword(password);
         this.transactions = [];

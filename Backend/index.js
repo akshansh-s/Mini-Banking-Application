@@ -1,8 +1,16 @@
+require('dotenv').config();
 const express = require('express');
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected...'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
+
 const User = require('./models/users.js');
 const app = express();
 app.use(express.json());
-let demoUser = new User('akshansh','ilovefintech',10000);
+let demoUser = new User('akshansh','7587305364','ilovefintech',10000);
 
 //Routes---
 //Login
