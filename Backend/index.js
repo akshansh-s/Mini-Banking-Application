@@ -1,15 +1,17 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
+const app = express();
+app.use(express.json());
+app.use(cors());
 
 mongoose.connect(process.env.MONGO, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-
 const User = require('./models/users.js');
-const app = express();
-app.use(express.json());
+
 let demoUser = new User('akshansh','7587305364','ilovefintech',10000);
 
 //Routes---
