@@ -1,18 +1,18 @@
 const bcrypt = require('bcrypt');
+const z = require('zod');
 
-class User {
-    constructor(username,mobile,password,balance) {
-        this.username = username;
-        this.mobile=mobile;
-        this.balance = balance;
-        this.initializePassword(password);
-        this.transactions = [];
-    }
-    async initializePassword(password) {
+const userSchema = z.object({
+  name: z.string().min(3, "Name must be at least 3 characters long"),
+  mobile: z.string().length(10, "Mobile number must be exactly 10 digits long"),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
+  balance: z.number().nonnegative("Balance cannot be negative"),
+});
+
+    async function initializePassword(password) {
         this.hashedPassword = await bcrypt.hash(password, 10);
     }
 
-    deposit(amount) {
+     function deposit(amount) {
         this.balance += amount;
         this.transactions.push({ type: 'deposit', amount });
     }
@@ -26,4 +26,4 @@ class User {
     }
 }
 
-module.exports = User;
+module.exports = userSchema;
