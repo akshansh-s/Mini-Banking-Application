@@ -3,8 +3,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
-app.use(express.json());
-app.use(cors());
+
+const authRoutes = require('./routes/authR.js');
+const accountRoutes = require('./routes/accountR.js');
+const transactionRoutes = require('./routes/transactionR.js');
 
 mongoose.connect(process.env.MONGO, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected...'))
@@ -13,6 +15,13 @@ mongoose.connect(process.env.MONGO, { useNewUrlParser: true, useUnifiedTopology:
 const User = require('./models/users.js');
 
 let demoUser = new User('akshansh','7587305364','ilovefintech',10000);
+
+app.use(express.json());
+app.use(cors());
+
+app.use('/api/auth', authRoutes);
+app.use('/api/account', accountRoutes);
+app.use('/api/transaction', transactionRoutes);
 
 //Routes---
 //Login
