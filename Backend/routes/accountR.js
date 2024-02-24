@@ -1,6 +1,6 @@
 const express = require('express');
 const accountController = require('../controllers/accountC.js');
-const { authenticate } = require('../middleware/authM.js'); // Assuming you have authentication middleware
+const authenticate  = require('../middleware/authM.js'); // Assuming you have authentication middleware
 
 const router = express.Router();
 
