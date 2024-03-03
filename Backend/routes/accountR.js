@@ -11,6 +11,6 @@ router.get('/balance', accountController.getBalance);
 
 router.post('/deposit', accountController.deposit);
 
-router.post('/withdraw', accountController.withdraw);
+router.post('/withdraw',  accountController.withdraw);
 
 module.exports = router;

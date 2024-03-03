@@ -1,10 +1,9 @@
 const express = require('express');
 const transactionController = require('../controllers/transactionC.js');
-const { authenticate } = require('../middleware/authM.js'); // Assuming you have authentication middleware
+const { authenticate } = require('../middleware/authM.js'); 
 
 const router = express.Router();
 
-// Middleware to protect routes
 router.use(authenticate);
 
 // Transfer money

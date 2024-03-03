@@ -8,6 +8,13 @@ const authRoutes = require('./routes/authR.js');
 const accountRoutes = require('./routes/accountR.js');
 const transactionRoutes = require('./routes/transactionR.js');
 
+app.use(express.json());
+app.use(cors());
+
+app.use('/api/auth', authRoutes);
+app.use('/api/account', accountRoutes);
+app.use('/api/transaction', transactionRoutes);
+
 mongoose.connect(process.env.MONGO, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.error('MongoDB connection error:', err));
@@ -16,12 +23,6 @@ const User = require('./models/users.js');
 
 let demoUser = new User('akshansh','7587305364','ilovefintech',10000);
 
-app.use(express.json());
-app.use(cors());
-
-app.use('/api/auth', authRoutes);
-app.use('/api/account', accountRoutes);
-app.use('/api/transaction', transactionRoutes);
 
 //Routes---
 //Login
