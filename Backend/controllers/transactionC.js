@@ -30,7 +30,11 @@ exports.transfer = async (req, res) => {
 
         await sender.save();
         await recipient.save();
-        res.send('Transfer successful');
+        res.send({
+            message: 'Transfer successful',
+            transaction: newTransaction
+        });
+        
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server error');
