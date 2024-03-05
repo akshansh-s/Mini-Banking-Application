@@ -1,5 +1,5 @@
-const User = require('../models/User');
-const Transaction = require('../models/Transaction');
+const User = require('../models/users');
+const Transaction = require('../models/transactions');
 
 exports.transfer = async (req, res) => {
     const { recipientMobile, amount } = req.body;
@@ -34,9 +34,27 @@ exports.transfer = async (req, res) => {
             message: 'Transfer successful',
             transaction: newTransaction
         });
-        
+
     } catch (err) {
         console.error(err.message);
+        res.status(500).send('Server error');
+    }
+};
+
+exports.history = async (req,res)=>{
+    
+    try{
+        const userId= await User.findById(req.user.id);
+
+        const transactions = await Transaction.find({
+            $or: [{ user: userId }, { recipient: userId }]
+        }, 'type user recipient amount createdAt') // Select specific fields to return
+        .sort({ createdAt: -1 });
+
+        res.json(transactions);
+    }
+    catch (err) {
+        console.error(err);
         res.status(500).send('Server error');
     }
 };

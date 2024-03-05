@@ -1,6 +1,6 @@
 const express = require('express');
 const transactionController = require('../controllers/transactionC.js');
-const { authenticate } = require('../middleware/authM.js'); 
+const authenticate  = require('../middleware/authM.js'); 
 
 const router = express.Router();
 

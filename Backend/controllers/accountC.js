@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const User = require('../models/users');
 
 exports.getBalance = async (req, res) => {
     try {
