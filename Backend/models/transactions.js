@@ -15,11 +15,11 @@ const transactionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
-  },
+  }, //sender
   recipient: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-  },
+  }, //required for transfer
   createdAt: {
     type: Date,
     default: Date.now,

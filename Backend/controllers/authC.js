@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
 const User = require('../models/User');
 
 exports.signup = async (req, res) => {
@@ -19,13 +20,13 @@ exports.signup = async (req, res) => {
 
         await user.save();
 
-        const payload = {
+        const jwtPayload = {
             user: {
                 id: user.id
             }
         };
 
-        jwt.sign(payload, process.env.SECRET, { expiresIn: '5h' }, (err, token) => {
+        jwt.sign(jwtPayload, process.env.SECRET, { expiresIn: '5h' }, (err, token) => {
             if (err) throw err;
             res.json({ token });
         });
@@ -40,12 +41,12 @@ exports.signin = async (req, res) => {
     try {
         const user = await User.findOne({ mobile });
         if (!user) {
-            return res.status(400).json({ message: 'Invalid Credentials' });
+            return res.status(401).json({ message: 'This account does not exist' });
         }
 
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid Credentials' });
+            return res.status(401).json({ message: 'Invalid Credentials' });
         }
 
         const payload = {
