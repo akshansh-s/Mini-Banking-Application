@@ -48,7 +48,7 @@ exports.history = async (req,res)=>{
 
         const transactions = await Transaction.find({
             $or: [{ user: userId }, { recipient: userId }]
-        }, 'type user recipient amount createdAt') // Select specific fields to return
+        }, 'type user recipient amount createdAt') //fields to return
         .sort({ createdAt: -1 });
 
         res.json(transactions);
