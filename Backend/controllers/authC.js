@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 require('dotenv').config();
 const User = require('../models/users');
 
@@ -10,11 +10,11 @@ exports.signup = async (req, res) => {
         if (user) {
             return res.status(400).json({ message: 'User already exists' });
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await User.schema.methods.hashPassword(password);
         user = new User({
             name,
             mobile,
-            hashedPassword: hashedPassword,
+            hashedPassword,
             balance
         });
 
@@ -43,7 +43,9 @@ exports.signin = async (req, res) => {
         if (!user) {
             return res.status(401).json({ message: 'This account does not exist' });
         }
-
+        // const trial=await bcrypt.hash(password, 10);
+        // console.log(trial);
+        // console.log(user.hashedPassword);
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
             return res.status(401).json({ message: 'Invalid Credentials' });
